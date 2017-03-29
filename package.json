@@ -1,0 +1,63 @@
+{
+  "name": "mscdwnldr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pooleparty/mscdwnldr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pooleparty/mscdwnldr/issues"
+  },
+  "homepage": "https://github.com/pooleparty/mscdwnldr#readme",
+  "dependencies": {
+    "youtube-dl": "^1.11.1",
+    "application-config": "^1.0.1",
+    "bunyan": "^1.8.8",
+    "debounce": "^1.0.0",
+    "electron": "^1.6.2",
+    "eslint": "^3.18.0",
+    "lodash": "^4.17.4",
+    "material-ui": "^0.17.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
+    "react-sortable-tree": "^0.1.12",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.8.2",
+    "redux-thunk": "^2.2.0",
+    "run-parallel": "^1.1.6",
+    "simple-get": "^2.4.0",
+    "uuid": "^3.0.1"
+  },
+  "devDependencies": {
+    "electron": "^1.6.2",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-mocha": "^4.9.0",
+    "eslint-plugin-react": "^6.10.2",
+    "foreman": "^2.0.0",
+    "rc": "^1.1.7",
+    "react-addons-shallow-compare": "^15.4.2",
+    "react-scripts": "0.9.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "eject": "react-scripts eject",
+    "dev": "nf start",
+    "electron": "node_modules/.bin/electron ./server/index.js",
+    "electron:debug": "node_modules/.bin/electron ./server/index.js --debug=5858"
+  }
+}
