@@ -55,6 +55,20 @@ function init() {
     });
   });
 
+  ipc.on('downloadVideo', (e, args) => {
+    services.youtube.download(
+      args.url,
+      args.args,
+      (start) => windows.main.send('downloadVideoStart', start),
+      (update) => windows.main.send('downloadVideoUpdate', update),
+      (err, complete) => {
+        if (err) {
+          return windows.main.send('downloadVideoError', err);
+        }
+        windows.main.send('downloadVideoComplete', complete);
+      });
+  });
+
   /**
    * Shell
    */

@@ -7,6 +7,7 @@ import {
   browserHistory
 } from 'react-router-dom';
 import MainViewContainer from './containers/MainViewContainer';
+import NotificationContainer from './containers/NotificationContainer';
 
 injectTapEventPlugin();
 
@@ -24,6 +25,7 @@ export default class App extends Component {
               <Route path="/" component={MainViewContainer} />
             </div>
           </Router>
+          <NotificationContainer />
         </div>
       </MuiThemeProvider>
     );

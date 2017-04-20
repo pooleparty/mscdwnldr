@@ -92,6 +92,9 @@ function getMenuTemplate() {
           role: 'copy'
         },
         {
+          role: 'paste'
+        },
+        {
           role: 'delete'
         },
         {

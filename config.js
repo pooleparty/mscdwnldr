@@ -1,4 +1,4 @@
-const appConfig = require('application-config')('Modularizer');
+const appConfig = require('application-config')('dwnldr');
 const path = require('path');
 const electron = require('electron');
 
@@ -39,8 +39,8 @@ module.exports = {
   WINDOW_MAIN: `file://${path.join(__dirname, 'public', 'index.html')}`,
 
   WINDOW_INITIAL_BOUNDS: {
-    width: 1200,
-    height: 1000
+    width: 1300,
+    height: 900
   },
   WINDOW_MIN_HEIGHT: 300,
   WINDOW_MIN_WIDTH: 425,

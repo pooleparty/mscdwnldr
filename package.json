@@ -15,7 +15,6 @@
   },
   "homepage": "https://github.com/pooleparty/mscdwnldr#readme",
   "dependencies": {
-    "youtube-dl": "^1.11.1",
     "application-config": "^1.0.1",
     "bunyan": "^1.8.8",
     "debounce": "^1.0.0",
@@ -35,7 +34,9 @@
     "redux-thunk": "^2.2.0",
     "run-parallel": "^1.1.6",
     "simple-get": "^2.4.0",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "youtube-dl": "^1.11.1",
+    "ytdl-core": "^0.12.1"
   },
   "devDependencies": {
     "electron": "^1.6.2",
