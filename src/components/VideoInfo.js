@@ -21,7 +21,6 @@ export default class VideoInfo extends Component {
   }
 
   handleDownload() {
-    console.log(this.props);
     this.props.onDownloadVideo(this.props.videoInfo.video_url, { format: this.state.selectedFormat, videoInfo: this.props.videoInfo });
   }
 
@@ -33,7 +32,6 @@ export default class VideoInfo extends Component {
         formats={this.props.videoInfo.formats}
         onFormatSelection={this.handleFormatSelection}
       />
-      <br />
       <div>
         <RaisedButton
           label="Download"

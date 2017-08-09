@@ -20,8 +20,10 @@
     "debounce": "^1.0.0",
     "electron": "^1.6.2",
     "eslint": "^3.18.0",
+    "fluent-ffmpeg": "^2.1.2",
     "lodash": "^4.17.4",
     "material-ui": "^0.17.1",
+    "moment": "^2.18.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
@@ -59,6 +61,6 @@
     "eject": "react-scripts eject",
     "dev": "nf start",
     "electron": "node_modules/.bin/electron ./server/index.js",
-    "electron:debug": "node_modules/.bin/electron ./server/index.js --debug=5858"
+    "electron:debug": "node_modules/.bin/electron --debug ./server/index.js"
   }
 }

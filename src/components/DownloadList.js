@@ -1,20 +1,23 @@
 import React, { Component, PropTypes } from 'react';
+import DownloadStatus from '../data/downloadStatus';
 import IconButton from 'material-ui/IconButton';
 import Paper from 'material-ui/Paper';
 import AvStop from 'material-ui/svg-icons/av/stop';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import LinearProgress from 'material-ui/LinearProgress';
-import Chip from 'material-ui/Chip';
-import { green300 } from 'material-ui/styles/colors';
 
 const downloadContainerStyle = {
   padding: 10,
-  marginTop: 10,
-  marginBottom: 10
+  marginTop: 5,
+  marginBottom: 5
 };
 
 const downloadActionsStyle = {
   display: 'flex'
+};
+
+const downloadProgressStyle = {
+  minHeight: 20
 };
 
 const downloadingStyle = {
@@ -23,77 +26,75 @@ const downloadingStyle = {
   alignItems: 'center'
 };
 
-function getDownloadActions(download) {
-  let actions = [];
-  if (!download.complete) {
-    actions = [
-      <div key={`stopDownload${download.downloadId}`}>
-        <IconButton tooltip="Stop Download">
-          <AvStop />
-        </IconButton>
-      </div>];
-  } else {
-    actions = [
-      <div key={`completeLabel${download.downloadId}`}>
-        <Chip backgroundColor={green300} >Complete</Chip>
-      </div>,
-      <div key={`closeDownload${download.downloadId}`}>
-        <IconButton tooltip="Close Download">
-          <NavigationClose />
-        </IconButton>
-      </div>];
-  }
-  return (<div style={downloadActionsStyle}>
-    {actions}
-  </div>);
-}
-
 function getDownloadProgress(download) {
+  let content;
   if (!download.complete) {
-    return (<LinearProgress
-      mode="determinate"
+    content = (<LinearProgress
+      mode={download.status === DownloadStatus.PENDING ? 'indeterminate' : 'determinate'}
       value={download.percent}
     />);
+  } else {
+    content = (<small>Download complete - {download.completedDate.format('M/D/YY h:mm:ss a')}</small>);
   }
-  return null;
-}
-
-// function getDownloadContainerStyle(download) {
-//   const style = Object.assign({}, downloadContainerStyle);
-//   if (download.complete) {
-//     style.backgroundColor = green300;
-//   }
-//   return style;
-// }
-
-function buildDownloadList(downloads = []) {
-  return downloads.map((download) => {
-    return (<Paper zDepth={1} style={downloadContainerStyle} key={download.downloadId}>
-      <div style={downloadingStyle}>
-        <div>{download.videoInfo.title} - {download.percent}</div>
-        <div>
-          {getDownloadActions(download)}
-        </div>
-      </div>
-      <div>
-        {getDownloadProgress(download)}
-      </div>
-    </Paper>);
-  }, this);
+  return (<div style={downloadProgressStyle}>{content}</div>);
 }
 
 export default class DownloadList extends Component {
-  render() {
-    const downloads = buildDownloadList(this.props.downloads);
+  getDownloadActions(download) {
+    let actions = [];
+    if (!download.complete) {
+      actions = [
+        <div key={`stopDownload${download.downloadId}`}>
+          <IconButton tooltip="Stop Download" onTouchTap={() => this.props.onStopDownload(download)}>
+            <AvStop />
+          </IconButton>
+        </div>];
+    } else {
+      actions = [
+        <div key={`closeDownload${download.downloadId}`}>
+          <IconButton tooltip="Close Download" onTouchTap={() => this.props.onCloseDownload(download)}>
+            <NavigationClose />
+          </IconButton>
+        </div>];
+    }
+    return (<div style={downloadActionsStyle}>
+      {actions}
+    </div>);
+  }
 
-    return (<div>{downloads}</div>);
+  buildDownloadList(downloads) {
+    return downloads.map((download) => {
+      return (<Paper zDepth={0} rounded={false} style={downloadContainerStyle} key={download.downloadId}>
+        <div style={downloadingStyle}>
+          <div>{download.videoInfo.title}</div>
+          <div>
+            {this.getDownloadActions(download)}
+          </div>
+        </div>
+        <div>
+          {getDownloadProgress(download)}
+        </div>
+      </Paper>);
+    });
+  }
+
+  render() {
+    const downloads = this.buildDownloadList(this.props.downloads);
+
+    return (<div>
+      {downloads}
+    </div>);
   }
 }
 
 DownloadList.propTypes = {
-  downloads: PropTypes.arrayOf(Object)
+  downloads: PropTypes.arrayOf(Object),
+  onStopDownload: PropTypes.func,
+  onCloseDownload: PropTypes.func
 };
 
 DownloadList.defaultProps = {
-  downloads: []
+  downloads: [],
+  onStopDownload: () => { },
+  onCloseDownload: () => { }
 };

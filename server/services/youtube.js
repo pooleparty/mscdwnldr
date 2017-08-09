@@ -21,7 +21,7 @@ function getInfo(url, callback) {
             return callback(err);
         }
 
-        // log(info);
+        info.formats = ytdl.filterFormats(info.formats, 'audioonly');
 
         callback(null, info);
     });
@@ -64,9 +64,13 @@ function download(url, args, startCallback, progressCallback, doneCallback) {
         video.on('progress', function data(chunkLength, downloaded, downloadLength) {
             if (downloadLength) {
                 var percent = (downloaded / downloadLength * 100).toFixed(2);
-                process.stdout.cursorTo(0);
-                process.stdout.clearLine(1);
-                process.stdout.write(percent + '%');
+                try {
+                    process.stdout.cursorTo(0);
+                    process.stdout.clearLine(1);
+                    process.stdout.write(percent + '%');
+                } catch (e) {
+
+                }
 
                 if (percent - lastPercent >= 10) {
                     lastPercent = percent;

@@ -3,7 +3,13 @@ import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import SearchBar from './SearchBar';
 import VideoInfo from './VideoInfo';
-import DownloadList from './DownloadList';
+import DownloadListContainer from '../containers/DownloadListContainer';
+
+const styles = {
+  videoInfoLoading: {
+    textAlign: 'center'
+  }
+};
 
 export default class MainView extends Component {
   constructor(props) {
@@ -11,20 +17,14 @@ export default class MainView extends Component {
 
     this.getVideoInfo = this.getVideoInfo.bind(this);
     this.getVideoInfoLoading = this.getVideoInfoLoading.bind(this);
-    this.getVideoDownloading = this.getDownloadList.bind(this);
     this.downloadTestVideo = this.downloadTestVideo.bind(this);
   }
 
   getVideoInfoLoading() {
     if (this.props.videoInfoLoading) {
-      return (<div>Loading Video Info <CircularProgress /></div>);
-    }
-    return null;
-  }
-
-  getDownloadList() {
-    if (this.props.downloads && this.props.downloads.length) {
-      return (<DownloadList downloads={this.props.downloads} />);
+      return (<div style={styles.videoInfoLoading}>
+        <CircularProgress />
+      </div>);
     }
     return null;
   }
@@ -51,8 +51,8 @@ export default class MainView extends Component {
         primary
         onTouchTap={this.downloadTestVideo}
       />
+      <DownloadListContainer />
       {this.getVideoInfoLoading()}
-      {this.getDownloadList()}
       {this.getVideoInfo()}
     </div>);
   }
@@ -64,14 +64,12 @@ MainView.propTypes = {
   videoInfoLoading: PropTypes.bool,
   videoDownloading: PropTypes.bool,
   videoDownloadPercent: PropTypes.number,
-  videoInfo: PropTypes.objectOf(Object),
-  downloads: PropTypes.arrayOf(Object)
+  videoInfo: PropTypes.objectOf(Object)
 };
 
 MainView.defaultProps = {
   videoInfoLoading: false,
   videoDownloading: false,
   videoDownloadPercent: 0,
-  videoInfo: undefined,
-  downloads: []
+  videoInfo: undefined
 };

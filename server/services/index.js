@@ -1,3 +1,4 @@
 module.exports = {
-    youtube: require('./youtube')
+    youtube: require('./youtube'),
+    audio: require('./audio')
 };

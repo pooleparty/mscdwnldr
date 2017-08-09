@@ -20,48 +20,23 @@ export default class FormatList extends Component {
   constructor(props) {
     super(props);
 
-    // this.getFormatRadioButtonList = this.getFormatRadioButtonList.bind(this);
     this.getFormatTable = this.getFormatTable.bind(this);
     this.handleFormatSelection = this.handleFormatSelection.bind(this);
   }
-
-  /*getFormatRadioButtonList() {
-    if (this.props.formats.length) {
-      const radioButtons = this.props.formats.map(format => {
-        const label = (<div>
-          <div><strong>{format.format}</strong></div>
-          <div>Extension: {format.ext}</div>
-          <div>Bitrate: {getAbr(format)}</div>
-          <div>Filesize: {getFilesize(format)}</div>
-        </div>);
-        return (<RadioButton key={format.format_id} value={format.format} label={label} />);
-      });
-      return (
-        <RadioButtonGroup name="format">
-          {radioButtons}
-        </RadioButtonGroup>
-      );
-    }
-    return null;
-  }*/
 
   getFormatTable() {
     const rows = this.props.formats.map(format => {
       return (<TableRow key={format.itag}>
         <TableRowColumn style={columnStyle}>{format.type}</TableRowColumn>
-        <TableRowColumn>{format.resolution || '-'}</TableRowColumn>
         <TableRowColumn>{getAbr(format)}</TableRowColumn>
-        <TableRowColumn>{format.resolution || '-'}</TableRowColumn>
       </TableRow>);
     });
 
-    return (<Table height="400px" onRowSelection={this.handleFormatSelection}>
+    return (<Table onRowSelection={this.handleFormatSelection}>
       <TableHeader displaySelectAll={false} fixedHeader>
         <TableRow>
           <TableHeaderColumn style={columnStyle}>Format</TableHeaderColumn>
-          <TableHeaderColumn>Resolution</TableHeaderColumn>
           <TableHeaderColumn>Audio Bitrate</TableHeaderColumn>
-          <TableHeaderColumn>Resolution</TableHeaderColumn>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -75,7 +50,6 @@ export default class FormatList extends Component {
   }
 
   render() {
-    // return this.getFormatRadioButtonList();
     return this.getFormatTable();
   }
 }

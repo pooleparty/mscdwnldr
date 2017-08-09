@@ -4,7 +4,8 @@ import {
 } from 'react-redux';
 import {
   getVideoInfo,
-  downloadVideo
+  downloadVideo,
+  closeDownload
 } from '../actions';
 import MainView from '../components/MainView';
 
@@ -26,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onDownloadVideo: (url, args) => {
       dispatch(downloadVideo(url, args));
+    },
+    onCloseDownload: (download) => {
+      dispatch(closeDownload(download));
     }
   };
 };

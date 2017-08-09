@@ -90,6 +90,15 @@ function downloadVideoError(error) {
   };
 }
 
+export const CLOSE_DOWNLOAD = 'CLOSE_DOWNLOAD';
+
+export function closeDownload(download) {
+  return {
+    type: CLOSE_DOWNLOAD,
+    download
+  };
+}
+
 export function downloadVideo(url, args) {
   return dispatch => {
     dispatch(downloadVideoStartRequest(url, args));
