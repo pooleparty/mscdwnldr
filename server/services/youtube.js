@@ -1,10 +1,18 @@
 const fs = require('fs');
+const url = require('url');
 const path = require('path');
 const _ = require('lodash');
 const uuid = require('uuid/v4');
 const ytdl = require('ytdl-core');
+const google = require('googleapis');
+const NodeCache = require('node-cache');
 const log = require('../log');
 const config = require('../../config');
+
+const youtubeClient = google.youtube('v3');
+const cache = new NodeCache({
+    stdTTL: 600 // in seconds
+});
 
 // youtubedl.exec(url, ['-x', '--audio-format', 'mp3'], {}, function exec(err, output) {
 //     if (err) {
@@ -13,17 +21,58 @@ const config = require('../../config');
 //     console.log(output.join('\n'));
 // });
 
-function getInfo(url, callback) {
-    log(`Getting youtube info for ${url}`);
+function getInfo(videoUrl, callback) {
+    log(`Getting youtube info for ${videoUrl}`);
 
-    ytdl.getInfo(url, function (err, info) {
+    // check to see if url is a playlist
+    const parsedUrl = url.parse(videoUrl, true);
+    if (parsedUrl.query && parsedUrl.query.list) {
+        return getPlaylistItems(parsedUrl.query.list, callback);
+    }
+
+    const cachedVideoInfo = cache.get(videoUrl);
+    if (cachedVideoInfo) {
+        console.log(`Found cached video info ${videoUrl}`);
+        return callback(null, {
+            info: cachedVideoInfo
+        });
+    }
+
+    ytdl.getInfo(videoUrl, function (err, info) {
         if (err) {
             return callback(err);
         }
 
-        info.formats = ytdl.filterFormats(info.formats, 'audioonly');
+        cache.set(videoUrl, info);
 
-        callback(null, info);
+        // info.formats = ytdl.filterFormats(info.formats, 'audioonly');
+
+        callback(null, {
+            info
+        });
+    });
+}
+
+function getPlaylistItems(playlistId, callback) {
+    console.log(`Getting youtube playlist info for playlist ${playlistId}`);
+
+    const cachedPlaylist = cache.get(playlistId);
+    if (cachedPlaylist) {
+        console.log(`Found cached playlist info ${playlistId}`);
+        return callback(null, Object.assign({ isPlaylist: true }, cachedPlaylist));
+    }
+
+    youtubeClient.playlistItems.list({
+        key: config.YOUTUBE_API_KEY,
+        part: 'snippet',
+        maxResults: 50,
+        fields: 'items(snippet(playlistId,resourceId,thumbnails,title)),nextPageToken,pageInfo,prevPageToken',
+        playlistId
+    }, (err, response) => {
+        if (!err) {
+            cache.set(playlistId, response);
+        }
+        callback(err, Object.assign({ isPlaylist: true }, response));
     });
 }
 

@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import DownloadStatus from '../data/downloadStatus';
 import IconButton from 'material-ui/IconButton';
 import Paper from 'material-ui/Paper';
 import AvStop from 'material-ui/svg-icons/av/stop';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import LinearProgress from 'material-ui/LinearProgress';
+import DownloadStatus from '../data/downloadStatus';
+import VideoAuthorAvatar from './VideoAuthorAvatar';
 
 const downloadContainerStyle = {
   padding: 10,
@@ -16,14 +17,22 @@ const downloadActionsStyle = {
   display: 'flex'
 };
 
+const downloadActionsContainerStyle = {
+  alignSelf: 'flex-end'
+};
+
 const downloadProgressStyle = {
   minHeight: 20
 };
 
 const downloadingStyle = {
   display: 'flex',
-  justifyContent: 'space-between',
   alignItems: 'center'
+};
+
+const downloadTitleStyle = {
+  flexGrow: 2,
+  marginLeft: 15
 };
 
 function getDownloadProgress(download) {
@@ -66,8 +75,9 @@ export default class DownloadList extends Component {
     return downloads.map((download) => {
       return (<Paper zDepth={0} rounded={false} style={downloadContainerStyle} key={download.downloadId}>
         <div style={downloadingStyle}>
-          <div>{download.videoInfo.title}</div>
-          <div>
+          <div><VideoAuthorAvatar video={download.videoInfo} /></div>
+          <div style={downloadTitleStyle}>{download.videoInfo.title}</div>
+          <div style={downloadActionsContainerStyle}>
             {this.getDownloadActions(download)}
           </div>
         </div>

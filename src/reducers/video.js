@@ -46,7 +46,7 @@ export function downloads(state = [], action) {
         })) {
         newState.push({
           ...action,
-          status: DownloadStatus.PENDING,
+          status: DownloadStatus.DOWNLOADING,
           percent: 0,
           error: null,
           complete: false
@@ -54,14 +54,12 @@ export function downloads(state = [], action) {
       }
       break;
     case DOWNLOAD_VIDEO_UPDATE:
-      // console.log(`DOWNLOAD_VIDEO_UPDATE downloadId: ${action.downloadId} percent: ${parseFloat(action.percent)}`);
       newState = [].concat(state);
       _.chain(newState)
         .find({
           downloadId: action.downloadId
         })
         .set('percent', parseFloat(action.percent))
-        .set('status', DownloadStatus.DOWNLOADING)
         .value();
       break;
     case DOWNLOAD_VIDEO_ERROR:

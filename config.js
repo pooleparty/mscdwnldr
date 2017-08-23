@@ -48,7 +48,9 @@ module.exports = {
     json: true,
     level: 'debug'
   },
-  HOST_URL: 'http://localhost:3000'
+  HOST_URL: 'http://localhost:3000',
+
+  YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY || 'AIzaSyDJg-Pgs3BOshOCm4SA4uiCy8xS2Gc7uTs'
 };
 
 function getDefaultDownloadPath() {

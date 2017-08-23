@@ -55,6 +55,10 @@ export default class FormatList extends Component {
 }
 
 FormatList.propTypes = {
-  formats: PropTypes.arrayOf(Object).isRequired,
+  formats: PropTypes.arrayOf(Object),
   onFormatSelection: PropTypes.func.isRequired
+};
+
+FormatList.defaultProps = {
+  formats: []
 };

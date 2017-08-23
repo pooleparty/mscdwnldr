@@ -14,6 +14,16 @@
     "url": "https://github.com/pooleparty/mscdwnldr/issues"
   },
   "homepage": "https://github.com/pooleparty/mscdwnldr#readme",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "eject": "react-scripts eject",
+    "electron": "node_modules/.bin/electron ./server/index.js",
+    "electron:debug": "node_modules/.bin/electron --debug ./server/index.js"
+  },
   "dependencies": {
     "application-config": "^1.0.1",
     "bunyan": "^1.8.8",
@@ -21,6 +31,7 @@
     "electron": "^1.6.2",
     "eslint": "^3.18.0",
     "fluent-ffmpeg": "^2.1.2",
+    "googleapis": "^20.1.0",
     "lodash": "^4.17.4",
     "material-ui": "^0.17.1",
     "moment": "^2.18.1",
@@ -51,16 +62,5 @@
     "rc": "^1.1.7",
     "react-addons-shallow-compare": "^15.4.2",
     "react-scripts": "0.9.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "eject": "react-scripts eject",
-    "dev": "nf start",
-    "electron": "node_modules/.bin/electron ./server/index.js",
-    "electron:debug": "node_modules/.bin/electron --debug ./server/index.js"
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import FormatList from './FormatList';
+import Playlist from './Playlist';
 
 export default class VideoInfo extends Component {
   constructor(props) {
@@ -25,6 +26,13 @@ export default class VideoInfo extends Component {
   }
 
   render() {
+    if (this.props.videoInfo.isPlaylist) {
+      return (<div>
+        <Playlist info={this.props.videoInfo} />
+        {/* <pre>{JSON.stringify(this.props.videoInfo, null, 2)}</pre> */}
+      </div>);
+    }
+
     return (<div>
       <h1>{this.props.videoInfo.title}</h1>
       <h2>Select Download Format</h2>
